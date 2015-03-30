@@ -1,7 +1,11 @@
 body {font-size:2em;}
 
-code {
-	margin:1em 0;
+aside {border-left:0.5em solid #ccc; padding-left:0.5em;}
+
+code {background:#eee; padding:0.25em 0.5em; display:inline-block;}
+
+code.block {
+	margin:1em 0; padding:1em;
 	white-space:pre; tab-size:4; overflow-x:auto;
 	display:block; position:relative;
 }

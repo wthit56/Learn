@@ -1,23 +1,33 @@
 <!doctype html>
-<html>
-	<head>
-		<link href="styles.css" rel="stylesheet" type="text/css" />
-		<script src="script.js" type="text/javascript"></script>
-	</head>
-	<body>
-		<h1>Learn JavaScript</h2>
-
-		<h2>Variables</h2>
-<pre>
-Variables are a concept borrowed from Mathematics, where they hold numbers and can be used 
-</pre>
-
-
-
-
-		<!--
-		<script type="text/javascript">writeCode("js", function() {
-		})</script>
-		-->
-	</body>
-</html>
+<script src="script.js" type="text/javascript"></script>
+<script type="text/javascript">render(function() {
+	return {
+		title: "Learn JavaScript",
+		content: [
+			[ "Introduction",
+				_/*
+					So you've decided to take the plunge and learn the most-used language out there today. A language used in browsers and servers, desktop PCs and mobile games. Welcome to JavaScript.
+					The best way to get started learning a language is to start writing it. If you're on a mobile device and have a PC or laptop handy, I'd recommend switching to that while you're working through this document; it'll allow you to try things out as we go. If not, feel free to look back at this page at a later time and try some of the examples yourself.
+					Once you've opened your browser and opened this page, hit the "F12" key. This should open up the browser's "developer tools". If it doesn't try right-clicking in the page and selecting the "inspect element" option, or similar. Then look for a "Console" tab, and activate it. Still having problems? Then I'd recommend you Google how to get to the "developer console" for your particular browser, and follow the instructions you find.
+					(Some browsers allow you to change where the console appears, docking it to vertically to the right or along the bottom. If you prefer working a particular way, you can look into the settings and find a layout that works best for you.)
+					The console is like a JavaScript playground. You can type any code in there, hit Enter, and the code will be run. Some code can change things on the page. Other code can add numbers together or produce other results, which will appear in the console window. As we go through the language and look at code examples, I'd recommend you try it out for yourself. Ideally, you'd type it in (most examples won't be too long for now, don't worry); but if you wish, you can copy the code text directly from the page and paste it in the console.
+					You can also try changing parts of the code to see what effect it has. So after trying `1 + 1`, try `2 + 3` or `6 * 5`. Even when you try something that errors (gives a big, red, angry message telling you the code went wrong) don't worry. Unless you really know what you're doing, you shouldn't be able to break anything so that you can't keep playing and fiddling with the code.
+					So now you've got the page open, and the console at the ready, it's time to start learning the basics of JavaScript.
+				*/
+			],
+			[ "Primitives",
+				_/*
+					Okay, it's not as technical as it sounds. All "primitives" means is "basic kinds of values".
+				*/,
+				function() {
+					"string"
+				}
+			],
+			[ "Variables",
+				_/*
+					Variables are a concept borrowed from mathematics, where they hold numbers and can be used in equations. For example, when the variable `x` is `5`, `x + 3` is `8`.
+				*/
+			]
+		]
+	};
+})</script>
