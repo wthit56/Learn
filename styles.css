@@ -1,0 +1,24 @@
+body {font-size:2em;}
+
+code {
+	margin:1em 0;
+	white-space:pre; tab-size:4; overflow-x:auto;
+	display:block; position:relative;
+}
+/*code .lang {
+	display:inline-block; margin-top:-0.4em;
+	padding:0.4em 0.6em; border:2px solid transparent;
+}
+	code .lang.over {
+		position: fixed; 
+		background:rgba(255, 255, 255, 0.75); border-color:grey;
+		left: 100%;
+		transform: translateX(-100%);
+	}
+*/
+code.js {}
+	/*code.js .lang {width:29px;}*/
+	code.js .comment {color:green;}
+	code.js .keyword {color:#AA0D91;}
+	code.js .number {color:#1C00CF;}
+	code.js .string, code.js .regex {color:#C41A16;}
