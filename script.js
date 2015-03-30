@@ -1,34 +1,18 @@
-var extractBody = (function() {
-	var getBody = /^function\s*\(\)\s*\{([\W\w]*)\}$/;
-	return function(code) { return (code + "").match(getBody)[1]; };
-})();
+var compile = (function() {
+	function compile(code) {
+		return new Function("return " + (code + "").replace(findLiterals, formatLiteral))();
+	}
 
-var rewrite = (function() {
 	var toEscape = /["\\]/g, newLine = /\n/g;
-	
-	function rewrite(code) {
-		return extractBody(code).replace(literal, formatLiteral);
-	}
-	rewrite.plain = function(code) {
-		return extractBody(code).replace(literal, plain);
-	};
-
-	var literal = /_?\/\*([\W\w]*?)\*\//g;
+	var findLiterals = /_\/\*([\W\w]*?)\*\//g;
 	function formatLiteral(match, literal) {
-		return "\"" + literal.replace(toEscape, "\\$&").replace(newLine, "\\n") + "\"";
+		return "\"" + literal.replace(toEscape, "\\$&").replace(newLine, "\\n\\\n") + "\"";
 	}
-	function plain(match, literal) { return literal; };
 
-	return rewrite;
+	return compile;
 })();
-var hasReturn = /\breturn \b/;
-function compile(code) {
-	code = rewrite(code);
-	if (!hasReturn.test(code)) { code = "return " + code; }
-	return new Function(code)();
-}
 
-var writeCode = compile(function() {
+var renderCode = compile(function() {
 	var renderers = {
 		js: {
 			find: (function() {
@@ -67,7 +51,7 @@ var writeCode = compile(function() {
 				words, boolean, nully, keyword,
 				call, object
 			) {
-				return /*<span class="*/ + (
+				return _/*<span class="*/ + (
 					comment ? "comment" :
 					string ? "literal string" :
 					regex ? "literal regex" :
@@ -97,12 +81,15 @@ var writeCode = compile(function() {
 	//var findBeforeFirstNewLine = /^\r?\n([^\r\n]+)/;
 	var findLeadingWhitespace = /^\s*/;
 
-	return function(lang, code) {
-		if (arguments.length === 1) { code = lang; lang = null; }
-		if (!(lang in renderers)) { lang = null; }
+	var getBody = /^function\s*\S*\s*\([^)]*\)\s*\{([\W\w]*)\}$/;
+	var findLessThan = /</g;
 
-		if (lang === "js") { code = extractBody(code); }
-		else { code = rewrite.plain(code); }
+	return function(code) {
+		var lang = code.name;
+		if (!lang) { lang = "js"; }
+		else if (!(lang in renderers)) { lang = null; }
+
+		code = (code + "").match(getBody)[1];
 
 		var tab = code.match(findTab); tab = tab ? tab[1].length : 0;
 		if (tab > 0) {
@@ -115,8 +102,65 @@ var writeCode = compile(function() {
 
 		code = code.replace(findLeadingWhitespace, "");
 
-		document.write(/*<code*/ + (lang ? _/* class="*/ + lang + _/*"*/ : "") + _/*>*/ +
+		console.log(lang);
+
+		return _/*<code*/ + (lang ? _/* class="block */ + lang + _/*"*/ : "") + _/*>*/ +
 			code +
-		_/*</code>*/);
+		_/*</code>*/;
 	};
-});
+})();
+
+var render = compile(function() {
+	var findLines = /^\s*(\()?(\S[\W\w]*?)\)?$/gm;
+	function renderLines(match, aside, text) {
+		text = text.replace(findSpecials, renderText);
+		return (
+			aside
+				? "<aside>" + text + "</aside>"
+				: "<p>" + text + "</p>"
+		);
+	}
+
+	var findSpecials = /[<]|(`([^`]*)`)|(_([^_]*)_)/g;
+	function renderText(match, inline, inlineCode, em, emText) {
+		console.log(!!inline);
+		return (
+			inline ? "<code>" + inlineCode.replace(findSpecials, renderText) + "</code>" :
+			em ? "<em>" + emText + "</em>" :
+			match === "<" ? "&lt;" :
+				match
+		);
+	}
+
+	function renderContent(part) {
+		if (typeof part === "string") {
+			return part.replace(findLines, renderLines);
+		}
+		else if (part instanceof Function) {
+			return renderCode(part);
+		}
+		else if (part instanceof Array) {
+			return (
+				_/*<h2>*/ + part[0] + _/*</h2>
+				*/ + part.slice(1).map(renderContent).join("\n")
+			);
+		}
+	}
+
+	return function render(data) {
+		data = compile(data)();
+		document.write(_/*
+			<html>
+				<head>
+					<title>*/ + data.title + _/*</title>
+					<link href="styles.css" rel="stylesheet" type="text/css" />
+					<script src="script.js" type="text/javascript"></script>
+				</head>
+				<body>
+					<h1>*/ + data.title + _/*</h1>
+					*/ + data.content.map(renderContent).join("\n") + _/*
+				</body>
+			</html>
+		*/);
+	};
+})();
