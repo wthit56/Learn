@@ -4,12 +4,17 @@
 	return {
 		title: "Page Title",
 		content: [
+			_/*
+				"double" 'single' "'nested'" "nested 'quotes' here"
+				can't won't wouldn't
+				9" (inches) 10' (foot)
+			*/,
 			_/*Text*/,
 			function() {
 				"test test test test test test";
 			},
 			_/*JS renderer test*/,
-			function js() {
+			function js() { // syntax test
 				1 + 3.14 + 4e-9 + 1e+10 + 010 + 0xa + 0X9098AFFEDF
 				"string" + "abc" + "with\"quo ' \nte" + 'with"quo \' \nte'
 				true + false

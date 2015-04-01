@@ -1,28 +1,29 @@
-body {font-size:2em;}
+body {font-size:2em; text-align:justify;}
 
+p, aside {margin:1em 0;}
 aside {border-left:0.5em solid #ccc; padding-left:0.5em;}
 
-code {background:#eee; padding:0.25em 0.5em; display:inline-block;}
+.clear {display:block; clear:both;}
 
-code.block {
-	margin:1em 0; padding:1em;
-	white-space:pre; tab-size:4; overflow-x:auto;
-	display:block; position:relative;
-}
-/*code .lang {
-	display:inline-block; margin-top:-0.4em;
-	padding:0.4em 0.6em; border:2px solid transparent;
-}
-	code .lang.over {
-		position: fixed; 
-		background:rgba(255, 255, 255, 0.75); border-color:grey;
-		left: 100%;
-		transform: translateX(-100%);
+.code {font-family:monospace; background:#eee; padding:0.25em 0.5em;}
+	.code-inline {}
+	.code-block {
+		margin-bottom:1em; padding:1em;
 	}
-*/
-code.js {}
-	/*code.js .lang {width:29px;}*/
-	code.js .comment {color:green;}
-	code.js .keyword {color:#AA0D91;}
-	code.js .number {color:#1C00CF;}
-	code.js .string, code.js .regex {color:#C41A16;}
+	.code-block code {display:inline-block;}
+
+		.code-label {border-bottom:1px solid; display:block; margin-bottom:1em;}
+		.code-title {display:inline-block;}
+		.code-lang {float:right; padding-left:1em;}
+			.code-lang:before {content:"[";} .code-lang:after {content:"]";}
+
+		.code-block code {
+			white-space:pre; tab-size:4; overflow-x:auto;
+			clear:left; max-width:100%;
+		}
+		code.js {}
+			/*code.js .lang {width:29px;}*/
+			code.js .comment {color:green;}
+			code.js .keyword {color:#AA0D91;}
+			code.js .number {color:#1C00CF;}
+			code.js .string, code.js .regex {color:#C41A16;}
